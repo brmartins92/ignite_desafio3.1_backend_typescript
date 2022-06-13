@@ -194,7 +194,7 @@ describe('Repositories', () => {
     expect(count).toBe('4');
   });
 
-  it('[GamesRepository] should be able to list users who have given game id', async () => {
+  it.only('[GamesRepository] should be able to list users who have given game id', async () => {
     const game = await ormGamesRepository.findOneOrFail({
       where: {
         title: 'Rocket League',
@@ -202,6 +202,7 @@ describe('Repositories', () => {
     });
 
     const users = await gamesRepository.findUsersByGameId(game.id);
+    console.log(users);
 
     expect(users).toEqual([
       expect.objectContaining({
