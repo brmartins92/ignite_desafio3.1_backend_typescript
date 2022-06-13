@@ -21,10 +21,13 @@ export class GamesRepository implements IGamesRepository {
   }
 
   async countAllGames(): Promise<[{ count: string }]> {
-    return this.repository.query("select COUNT(id) from games"); // Complete usando raw query
+    return this.repository.query("select COUNT(id) from games"); // Complete usando raw queryS
   }
 
   async findUsersByGameId(id: string): Promise<User[]> {
-   return await this.repositoryUser.createQueryBuilder("user").where("user.id = :id", { id }).getMany();
+   return await this.repository.createQueryBuilder()
+   .relation(Game, "users")
+   .of(id) // you can use just post id as well
+   .loadMany();
   }
 }
